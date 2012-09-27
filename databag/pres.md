@@ -1,9 +1,37 @@
 
 # databag
 
-  - a lame attempt at a daemonless nosql db
+![dbag](dbag.png)
 
-  - secretly, it's a schemaless wrapper on top of sqlite
+- jeremy kelley
+- @nod
+- sept 27, 2012
+
+---
+
+# premature escalation
+
+developers from 15 to 50 suffer from this severe and potentially embarassing
+condition but are often afraid to admit it
+
+
+---
+
+# what can we do?
+
+being overly concerned about performance can really exacerbate this problem
+
+just code on something fun, the problem will often take care of itself
+
+use the proper tools
+
+---
+
+# databag
+
+simple attempt at a document oriented, daemonless, pure python datastore
+
+schemaless wrapper on top of sqlite
 
 ![dbag](dbag.png)
 
@@ -11,15 +39,14 @@
 
 ## ok, why?
 
-  - tiny VMs are cheap and ubiquitous
-  - do you know how much ram an aws micro has?
-  - also, i'm not cool enough to use heroku
-  - I don't need a full blown db process hogging resources
-  - deployment is a self contained virtualenv, then splat a flat file in
-    place
+tiny VMs are cheap and ubiquitous, limited resources
 
-  - has numerous use cases beyond frugal hosting if you consider transient
-    compute nodes, collection nodes, queue based parallelization...
+need a full blown db process hogging those resources?
+
+deployment involves the process hitting a flat file
+
+numerous use cases beyond frugal hosting if you consider transient compute
+nodes, collection nodes, queue based parallelization...
 
 ---
 
@@ -44,7 +71,7 @@ couldn't find a good pure py, but cross language, nosqlish flat file db
   - tokyo cabinet? really?!
   - &lt;insert whatever else here&gt;? maybe...
 
-(note, goatfish... but I didn't like the query options)
+note: goatfish & dumptruck... but I don't like their query options
 
 ---
 
@@ -52,7 +79,9 @@ couldn't find a good pure py, but cross language, nosqlish flat file db
 
 ---
 
-## what were you expecting?
+## this.
+
+what were you expecting?
 
     !pycon
     >>> from databag import DataBag
@@ -72,21 +101,15 @@ couldn't find a good pure py, but cross language, nosqlish flat file db
 
 In databag, the really useful stuff is a funly class named DictBag.
 
-  - dictbag
-  - DictBAG
-  - DICTBAG
-
-Silly name, but really powerful.
-
 ---
 
-# mainly, I just like saying dictbag
+# also, I like saying dictbag
 
 ![bunk](bunk.gif)
 
 ---
 
-## How about this?
+## the codes
 
     !pycon
     >>> from databag import DictBag, Q
@@ -122,21 +145,31 @@ Silly name, but really powerful.
 
 ## Where Can I Get This?!1?!11?!
 
-  - from pypi `pip install databag`
-  - latest source can be found at github.com/nod/databag
+latest source can be found at github.com/nod/databag
+
+It's in pypi but the version is older and buggier.  Will update soon.
 
 ---
 
 ## parting thoughts
 
-  - it works awesomely with DictShield by James Dennis
-  - It does much more, has pretty good test coverage and the README has more
-    examples, as does the source.
-  - I'm using it in production, but still needs work.
-  - Thanks for listening.
+it works awesomely with DictShield/Schematics by James Dennis
 
-![clapping](clapping.gif)
+It does much more, has pretty good test coverage and the README has more
+examples, as does the source.
 
+I'm using it in production for personal stuff.
+
+alpha quality right now
+
+---
+
+# thanks
 
 Jeremy Kelley, @nod, jeremy@33ad.org
+
+github.com/nod/databag
+
+![bathtubs](bathtubs.jpg)
+
 
