@@ -1,19 +1,16 @@
 
 # databag
 
-![dbag](dbag.png)
-
 - jeremy kelley
 - @nod
-- sept 27, 2012
+- oct 25, 2012 - awpug
 
 ---
 
-# premature escalation
+# premature optimization
 
-developers from 15 to 50 suffer from this severe and potentially embarassing
-condition but are often afraid to admit it
-
+developers often suffer from this severe and potentially embarassing condition
+but are often afraid to admit it
 
 ---
 
@@ -23,17 +20,14 @@ being overly concerned about performance can really exacerbate this problem
 
 just code on something fun, the problem will often take care of itself
 
-use the proper tools
+use a simple tool that's easy to develop with but may not be optimal for
+serving ALL THE PEOPLE ALL THE TIME
 
 ---
 
-# databag
+# which brings us to databag
 
-simple attempt at a document oriented, daemonless, pure python datastore
-
-schemaless wrapper on top of sqlite
-
-![dbag](dbag.png)
+schemaless wrapper, document oriented store, on top of sqlite
 
 ---
 
@@ -41,34 +35,20 @@ schemaless wrapper on top of sqlite
 
 tiny VMs are cheap and ubiquitous, limited resources
 
-need a full blown db process hogging those resources?
-
-deployment involves the process hitting a flat file
-
+<small>
 numerous use cases beyond frugal hosting if you consider transient compute
 nodes, collection nodes, queue based parallelization...
+</small>
 
 ---
 
-## no, really. why this?
-
-  - sqlite is solid... but, i'm a fan of nosql.
-  - it's pythonic and simple to use.
-  - makes data persistence crazy easy
-  - offers versioning of data if you want it
-  - transparently compresses (bz2) data as it goes in when useful to minimize
-    growth of raw file
-  - other reasons that are awesome
-
----
-
-## are there alternatives?
+## alternatives?
 
 couldn't find a good pure py, but cross language, nosqlish flat file db
 
   - pickle?  no.
-  - json to text? ha.
-  - tokyo cabinet? really?!
+  - shelve? no querying.
+  - json to big text file? ha.
   - &lt;insert whatever else here&gt;? maybe...
 
 note: goatfish & dumptruck... but I don't like their query options
@@ -81,11 +61,9 @@ note: goatfish & dumptruck... but I don't like their query options
 
 ## this.
 
-what were you expecting?
-
     !pycon
     >>> from databag import DataBag
-    >>> d = DataBag(fpath='/tmp/mybag')
+    >>> d = DataBag(table='dbag', fpath='/tmp/mybag')
     >>> d.add('asdfasdf')
     '57efgS2jKc8bp4pje5pgaW'
     >>> d[_]
@@ -95,13 +73,13 @@ what were you expecting?
     >>> d[_]
     {u'name': u'jeremy'}
 
+what were you expecting?
+
 ---
 
 # But what about DictBags?
 
 In databag, the really useful stuff is a funly class named DictBag.
-
----
 
 # also, I like saying dictbag
 
@@ -112,8 +90,8 @@ In databag, the really useful stuff is a funly class named DictBag.
 ## the codes
 
     !pycon
-    >>> from databag import DictBag, Q
-    >>> d = DictBag()
+    >>> from databag import DictBag
+    >>> d = DictBag('dbag')
     >>> d.ensure_index( ('name','age') )
     >>> d.add( {'name': 'joe', 'age': 23} )
     '6xDZzTgccXCRLdp4ADjxaa'
@@ -127,49 +105,62 @@ In databag, the really useful stuff is a funly class named DictBag.
 ## HOW ABOUT SOME QUERIES!
 
     !pycon
+	  ... continued ...
+
     >>> d.find(name='jill')
     <generator object <genexpr> at 0x109f9b320>
+
+---
+
+## AND SOME QUERIES!
+
+    !pycon
+	  ... continued ...
 
     >>> d.find(name='jill').next()
     (u'73B5oGX5yFm4GWWpl1pzxg', {u'age': 50, u'name': u'jill'})
 
-    >>> d.find(Q('age')>40).next()
-    (u'73B5oGX5yFm4GWWpl1pzxg', {u'age': 50, u'name': u'jill'})
+---
 
-    >>> for k, rec in d.find(1<Q('age')<60):
-    ...   print k, rec
-    XCRLdp4ADjxaa {u'age': 23, u'name': u'joe'}
-    73B5oGX5yFm4GWWpl1pzxg {u'age': 50, u'name': u'jill'}
+## AND THESE QUERIES!
+
+    !pycon
+	  ... continued ...
+
+    >>> d.find({'name':'jill'}).next()
+    (u'73B5oGX5yFm4GWWpl1pzxg', {u'age': 50, u'name': u'jill'})
 
 ---
 
-## Where Can I Get This?!1?!11?!
+## AND THOSE QUERIES
 
-latest source can be found at github.com/nod/databag
+    !pycon
+	  ... continued ...
 
-It's in pypi but the version is older and buggier.  Will update soon.
+    >>> d.find({'age': {'$gt': 40}}).next()
+    (u'73B5oGX5yFm4GWWpl1pzxg', {u'age': 50, u'name': u'jill'})
 
 ---
 
 ## parting thoughts
 
-it works awesomely with DictShield/Schematics by James Dennis
+it works well with DictShield/Schematics by James Dennis (@j2labs)
 
 It does much more, has pretty good test coverage and the README has more
 examples, as does the source.
 
 I'm using it in production for personal stuff.
 
-alpha quality right now
+WARNING - alpha quality right now.  well tested but we're still talking about
+data stores so should be extra careful
 
 ---
 
 # thanks
 
-Jeremy Kelley, @nod, jeremy@33ad.org
+find me online: @nod
 
-github.com/nod/databag
+find the code at: `github.com/nod/databag`
 
 ![bathtubs](bathtubs.jpg)
-
 

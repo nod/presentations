@@ -67,7 +67,7 @@ div.slide {
   left: 50%;
   top: 50%;
   margin-top: -350px;
-  background-color: #fffff0;
+  background-color: #f0f0f0;
   -webkit-transition: margin 0.25s ease-in-out;
   -moz-transition: margin 0.25s ease-in-out;
   -o-transition: margin 0.25s ease-in-out;
